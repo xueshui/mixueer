@@ -5,14 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>米雪儿哈气了喵 · 个人主页</title>
     <style>
-        /* 全局重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* 背景图片（清晰呈现） */
+        /* ✅ 背景：图片直接铺满，不叠深色蒙版，明亮清晰 */
         body {
             min-height: 100vh;
             display: flex;
@@ -23,49 +18,44 @@
             position: relative;
             overflow-x: hidden;
 
-            /* 背景图片 + 极轻微暗化，保持图片清晰 */
-            background-image: 
-                linear-gradient(135deg, rgba(15, 15, 25, 0.25), rgba(20, 20, 30, 0.3)),
-                url('https://klbq-website-cdn.idreamsky.com/klbq-admin/prod/images/202503/23545016-79dc-4a4b-9338-820939557882.jpg');
+            background-image: url('https://klbq-website-cdn.idreamsky.com/klbq-admin/prod/images/202503/23545016-79dc-4a4b-9338-820939557882.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
+            background-color: #1a1a22; /* 图片加载前兜底 */
         }
 
-        /* 图片加载失败时的深色兜底 */
+        /* ✅ 只留一层极淡的暗角，让文字可读，不影响亮度 */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(circle at 30% 30%, #2a2a35 0%, #15151d 60%, #0d0d12 100%);
-            z-index: -2;
+            background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.35) 100%);
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* 主要卡片容器 — 液态玻璃（降低模糊，保持背景清晰） */
+        /* 卡片 — 液态玻璃，模糊适中，背景清晰透出 */
         .profile-card {
             max-width: 540px;
             width: 100%;
             position: relative;
             z-index: 10;
 
-            /* 液态玻璃核心 — 模糊度降低，背景更清晰 */
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(16px) saturate(150%);
-            -webkit-backdrop-filter: blur(16px) saturate(150%);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
 
-            /* 大圆角 */
             border-radius: 56px;
             padding: 2.8rem 2.2rem 3rem;
 
-            /* 玻璃边缘光效 + 深色柔和阴影 */
-            border: 1.5px solid rgba(255, 255, 255, 0.28);
-            box-shadow: 
-                0 25px 60px -12px rgba(0, 0, 0, 0.5),
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            box-shadow:
+                0 25px 60px -12px rgba(0, 0, 0, 0.45),
                 0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-                0 8px 32px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
 
             display: flex;
             flex-direction: column;
@@ -76,14 +66,13 @@
 
         .profile-card:hover {
             transform: translateY(-6px);
-            box-shadow: 
-                0 32px 70px -16px rgba(0, 0, 0, 0.6),
-                0 0 0 1px rgba(255, 255, 255, 0.18) inset,
-                0 12px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            box-shadow:
+                0 32px 70px -16px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 12px 40px rgba(0, 0, 0, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
         }
 
-        /* 液态高光装饰（轻微） */
         .profile-card::before {
             content: '';
             position: absolute;
@@ -91,28 +80,25 @@
             left: 8%;
             width: 48%;
             height: 28%;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.22) 0%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
-            opacity: 0.65;
+            opacity: 0.7;
             z-index: 0;
         }
 
-        .profile-card > * {
-            position: relative;
-            z-index: 1;
-        }
+        .profile-card > * { position: relative; z-index: 1; }
 
-        /* 头像区域 — 玻璃圆环 */
+        /* 头像 */
         .avatar-wrapper {
             width: 130px;
             height: 130px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(6px);
-            border: 3px solid rgba(255, 255, 255, 0.55);
-            box-shadow: 
-                0 12px 28px -8px rgba(0, 0, 0, 0.5),
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            box-shadow:
+                0 12px 28px -8px rgba(0, 0, 0, 0.45),
                 0 0 0 5px rgba(255, 255, 255, 0.12),
                 inset 0 2px 8px rgba(255, 255, 255, 0.25);
             display: flex;
@@ -124,8 +110,8 @@
         }
 
         .avatar-wrapper:hover {
-            box-shadow: 
-                0 16px 32px -8px rgba(0, 0, 0, 0.6),
+            box-shadow:
+                0 16px 32px -8px rgba(0, 0, 0, 0.55),
                 0 0 0 8px rgba(255, 255, 255, 0.18),
                 inset 0 2px 8px rgba(255, 255, 255, 0.35);
             transform: scale(1.03);
@@ -138,72 +124,68 @@
             display: block;
         }
 
-        /* 昵称 — 白色玻璃质感 */
+        /* 昵称 */
         .nickname {
             font-size: 2.1rem;
             font-weight: 700;
             letter-spacing: 1px;
             color: #ffffff;
             margin-bottom: 0.6rem;
-            text-shadow: 
-                0 2px 8px rgba(0, 0, 0, 0.55),
-                0 1px 2px rgba(0, 0, 0, 0.4);
+            text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.6),
+                0 1px 2px rgba(0, 0, 0, 0.45);
             line-height: 1.3;
         }
 
-        /* 自我介绍 — 液态玻璃小胶囊 */
+        /* 自我介绍 */
         .bio {
             font-size: 1.02rem;
-            color: rgba(255, 255, 255, 0.92);
+            color: rgba(255, 255, 255, 0.95);
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(8px);
             padding: 0.7rem 1.7rem;
             border-radius: 50px;
             margin: 0.5rem 0 0.9rem;
-            font-weight: 400;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            box-shadow: 
-                0 4px 12px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.32);
             max-width: 100%;
             word-break: break-word;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
-        /* 新增：兴趣爱好介绍胶囊 */
+        /* 兴趣爱好 */
         .hobby {
             font-size: 0.98rem;
-            color: rgba(255, 255, 255, 0.92);
+            color: rgba(255, 255, 255, 0.95);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
             padding: 0.7rem 1.6rem;
             border-radius: 50px;
             margin: 0 0 1.6rem;
-            font-weight: 400;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 4px 12px rgba(0, 0, 0, 0.22),
-                inset 0 1px 0 rgba(255, 255, 255, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
             max-width: 100%;
             word-break: break-word;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
             line-height: 1.5;
         }
 
-        .hobby .line {
-            display: block;
-        }
+        .hobby .line { display: block; }
 
         .hobby .highlight {
             color: #ffd9e6;
             font-weight: 600;
-            text-shadow: 0 0 10px rgba(255, 160, 190, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 0 10px rgba(255, 160, 190, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45);
         }
 
-        /* QQ号码区域 */
+        /* QQ 区域 */
         .qq-area {
             display: flex;
             flex-direction: column;
@@ -217,21 +199,18 @@
             -webkit-touch-callout: none;
         }
 
-        .qq-area:active {
-            opacity: 0.8;
-        }
+        .qq-area:active { opacity: 0.8; }
 
         .qq-label {
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2.5px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.75);
             margin-bottom: 0.3rem;
             font-weight: 500;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
         }
 
-        /* QQ号码 — 液态玻璃凸起按钮 */
         .qq-number {
             font-size: 1.95rem;
             font-weight: 700;
@@ -244,28 +223,28 @@
             align-items: center;
             gap: 0.6rem;
             border: 1.5px solid rgba(255, 255, 255, 0.45);
-            box-shadow: 
-                0 8px 0 rgba(0, 0, 0, 0.25),
-                0 10px 24px -6px rgba(0, 0, 0, 0.5),
+            box-shadow:
+                0 8px 0 rgba(0, 0, 0, 0.22),
+                0 10px 24px -6px rgba(0, 0, 0, 0.45),
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
             transition: all 0.1s ease;
             line-height: 1.4;
             letter-spacing: 0.5px;
             margin-bottom: 0.25rem;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
         .qq-number:active {
             transform: translateY(3px);
-            box-shadow: 
-                0 4px 0 rgba(0, 0, 0, 0.25),
-                0 6px 12px -4px rgba(0, 0, 0, 0.5),
+            box-shadow:
+                0 4px 0 rgba(0, 0, 0, 0.22),
+                0 6px 12px -4px rgba(0, 0, 0, 0.45),
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
         .copy-hint {
             font-size: 0.76rem;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.78);
             display: flex;
             align-items: center;
             gap: 0.35rem;
@@ -274,22 +253,19 @@
             backdrop-filter: blur(4px);
             padding: 0.25rem 1rem;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
         }
 
-        .copy-hint i {
-            font-style: normal;
-            font-size: 1rem;
-        }
+        .copy-hint i { font-style: normal; font-size: 1rem; }
 
-        /* B站按钮 — 液态玻璃粉色 */
+        /* B 站按钮 */
         .bilibili-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 0.7rem;
-            background: rgba(251, 114, 153, 0.75);
+            background: rgba(251, 114, 153, 0.78);
             backdrop-filter: blur(8px);
             color: #ffffff;
             font-weight: 600;
@@ -297,8 +273,8 @@
             padding: 0.9rem 2.1rem;
             border-radius: 60px;
             text-decoration: none;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 
+            border: 1.5px solid rgba(255, 255, 255, 0.45);
+            box-shadow:
                 0 12px 24px -8px rgba(251, 114, 153, 0.55),
                 0 0 0 1px rgba(255, 255, 255, 0.2) inset,
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -308,43 +284,39 @@
             letter-spacing: 0.5px;
             margin-top: 0.2rem;
             cursor: pointer;
-            text-shadow: 0 1px 3px rgba(140, 40, 70, 0.4);
+            text-shadow: 0 1px 3px rgba(140, 40, 70, 0.45);
         }
 
         .bilibili-btn:hover {
-            background: rgba(251, 130, 165, 0.9);
-            box-shadow: 
+            background: rgba(251, 130, 165, 0.92);
+            box-shadow:
                 0 18px 30px -8px rgba(251, 114, 153, 0.7),
-                0 0 0 1px rgba(255, 255, 255, 0.35) inset,
+                0 0 0 1px rgba(255, 255, 255, 0.4) inset,
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
             transform: scale(1.03) translateY(-2px);
         }
 
         .bilibili-btn:active {
             transform: scale(0.98) translateY(1px);
-            box-shadow: 
+            box-shadow:
                 0 6px 12px -4px rgba(251, 114, 153, 0.55),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
-        .bilibili-icon {
-            font-size: 1.4rem;
-            line-height: 1;
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
-        }
+        .bilibili-icon { font-size: 1.4rem; line-height: 1; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15)); }
 
-        /* 装饰小元素 */
+        /* 装饰 */
         .decoration {
             display: flex;
             gap: 0.6rem;
             margin-top: 1.4rem;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.7);
             opacity: 0.9;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
         }
 
-        /* 响应式调整 */
+        /* 响应式 */
         @media (max-width: 480px) {
             .profile-card {
                 padding: 2rem 1.4rem 2.4rem;
@@ -352,71 +324,40 @@
                 backdrop-filter: blur(12px) saturate(140%);
                 -webkit-backdrop-filter: blur(12px) saturate(140%);
             }
-            .nickname {
-                font-size: 1.7rem;
-            }
-            .qq-number {
-                font-size: 1.55rem;
-                padding: 0.25rem 1.1rem;
-            }
-            .bilibili-btn {
-                font-size: 1rem;
-                padding: 0.8rem 1.6rem;
-            }
-            .avatar-wrapper {
-                width: 110px;
-                height: 110px;
-            }
-            .bio {
-                font-size: 0.95rem;
-                padding: 0.6rem 1.3rem;
-            }
-            .hobby {
-                font-size: 0.9rem;
-                padding: 0.6rem 1.2rem;
-            }
+            .nickname { font-size: 1.7rem; }
+            .qq-number { font-size: 1.55rem; padding: 0.25rem 1.1rem; }
+            .bilibili-btn { font-size: 1rem; padding: 0.8rem 1.6rem; }
+            .avatar-wrapper { width: 110px; height: 110px; }
+            .bio { font-size: 0.95rem; padding: 0.6rem 1.3rem; }
+            .hobby { font-size: 0.9rem; padding: 0.6rem 1.2rem; }
         }
 
-        /* 禁止双击选中 */
-        .qq-area ::selection {
-            background: transparent;
-        }
-        .qq-area ::-moz-selection {
-            background: transparent;
-        }
+        .qq-area ::selection { background: transparent; }
+        .qq-area ::-moz-selection { background: transparent; }
 
-        /* 悬停微调 */
         .qq-area:hover .qq-number {
             background: rgba(255, 255, 255, 0.24);
-            border-color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.65);
         }
 
-        /* 自定义提示浮层 */
-        .copy-toast-custom {
-            pointer-events: none;
-        }
+        .copy-toast-custom { pointer-events: none; }
     </style>
 </head>
 <body>
     <div class="profile-card">
-        <!-- 头像：引用 tx.jpg，若不存在则显示“喵” -->
         <div class="avatar-wrapper">
             <img src="tx.jpg" alt="米雪儿哈气了喵 的头像" onerror="this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='<span style=\'font-size:3.5rem;color:rgba(255,255,255,0.85);\'>喵</span>';">
         </div>
 
-        <!-- 昵称 -->
         <div class="nickname">米雪儿哈气了喵</div>
 
-        <!-- 自我介绍 -->
         <div class="bio">欢迎加我QQ一起玩喵~</div>
 
-        <!-- 新增：兴趣爱好介绍 -->
         <div class="hobby">
             <span class="line">🎮 喜欢玩 <span class="highlight">卡拉彼丘</span></span>
             <span class="line">💖 最喜欢 <span class="highlight">米雪儿</span></span>
         </div>
 
-        <!-- QQ号区域：双击复制 -->
         <div class="qq-area" id="qqArea" title="双击复制QQ号" aria-label="双击复制QQ号 2515389063">
             <span class="qq-label">🐾 企鹅号</span>
             <div class="qq-number" id="qqNumberDisplay">
@@ -428,14 +369,12 @@
             </span>
         </div>
 
-        <!-- B站关注按钮 -->
         <a href="https://space.bilibili.com/250094029" class="bilibili-btn" target="_blank" rel="noopener noreferrer">
             <span class="bilibili-icon">📺</span>
             关注我的B站
             <span style="font-size:1.2rem;">→</span>
         </a>
 
-        <!-- 小装饰 -->
         <div class="decoration">
             <span>✨</span>
             <span>🐱</span>
@@ -448,24 +387,17 @@
             const QQ_NUMBER = '2515389063';
             const qqArea = document.getElementById('qqArea');
 
-            // 双击复制QQ号
             qqArea.addEventListener('dblclick', function(e) {
                 e.preventDefault();
-
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(QQ_NUMBER)
-                        .then(() => {
-                            showCopyFeedback('✅ QQ号已复制！');
-                        })
-                        .catch(() => {
-                            fallbackCopyQQ();
-                        });
+                        .then(() => showCopyFeedback('✅ QQ号已复制！'))
+                        .catch(() => fallbackCopyQQ());
                 } else {
                     fallbackCopyQQ();
                 }
             });
 
-            // 降级复制方法
             function fallbackCopyQQ() {
                 try {
                     const textArea = document.createElement('textarea');
@@ -489,12 +421,9 @@
                 }
             }
 
-            // 提示浮层（中性液态玻璃风格）
             function showCopyFeedback(message, isError = false) {
                 const existingToast = document.querySelector('.copy-toast-custom');
-                if (existingToast) {
-                    existingToast.remove();
-                }
+                if (existingToast) existingToast.remove();
 
                 const toast = document.createElement('div');
                 toast.className = 'copy-toast-custom';
@@ -529,9 +458,7 @@
                     toast.style.opacity = '0';
                     toast.style.transform = 'translateX(-50%) translateY(14px)';
                     setTimeout(() => {
-                        if (toast.parentNode) {
-                            toast.remove();
-                        }
+                        if (toast.parentNode) toast.remove();
                     }, 300);
                 }, 1900);
             }
